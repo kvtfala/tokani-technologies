@@ -1,72 +1,37 @@
-name: Sync Tokani website from Vercel preview
+name: Unpack Tokani website payload on PR
 
 on:
   pull_request:
     branches: [main]
     types: [opened, synchronize, reopened]
-  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  sync:
+  unpack:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out writable branch
+      - name: Check out PR branch
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref || github.ref_name }}
+          ref: website-sync
 
-      - name: Fetch deployed website
+      - name: Unpack payload
         shell: bash
-        env:
-          BASE_URL: https://tokani-technologies-qtbn5pclu-kvtfalas-projects.vercel.app
-          SHARE_URL: https://tokani-technologies-qtbn5pclu-kvtfalas-projects.vercel.app/?_vercel_share=AB7jeshKnpaAbfAZn4TL4ZPZUwmv6pL1
         run: |
           set -euo pipefail
-          COOKIE=/tmp/vercel-cookies.txt
-          CURL="curl -fsSL --retry 3 --retry-delay 2 -c $COOKIE -b $COOKIE"
+          if [ ! -f site-payload.b64 ]; then
+            echo "No site payload in branch; nothing to unpack."
+            exit 0
+          fi
+          mkdir -p /tmp/tokani-site
+          base64 --decode site-payload.b64 > /tmp/tokani-site.zip
+          unzip -oq /tmp/tokani-site.zip -d /tmp/tokani-site
+          cp -a /tmp/tokani-site/. .
+          rm -f site-payload.b64 .website-sync-trigger
 
-          $CURL "$SHARE_URL" -o index.html
-
-          fetch() {
-            local remote="$1"
-            local local_path="$2"
-            mkdir -p "$(dirname "$local_path")"
-            $CURL "$BASE_URL/$remote" -o "$local_path"
-          }
-
-          fetch story.html story.html
-          fetch solutions.html solutions.html
-          fetch how-we-work.html how-we-work.html
-          fetch contact.html contact.html
-          fetch styles.css styles.css
-          fetch script.js script.js
-          fetch robots.txt robots.txt
-          fetch site.webmanifest site.webmanifest
-          fetch favicon.ico favicon.ico
-          fetch favicon-16x16.png favicon-16x16.png
-          fetch favicon-32x32.png favicon-32x32.png
-          fetch favicon-48x48.png favicon-48x48.png
-          fetch apple-touch-icon.png apple-touch-icon.png
-          fetch android-chrome-192x192.png android-chrome-192x192.png
-          fetch android-chrome-512x512.png android-chrome-512x512.png
-          fetch mstile-150x150.png mstile-150x150.png
-          fetch assets/logo-horizontal.png assets/logo-horizontal.png
-          fetch assets/logo-horizontal.webp assets/logo-horizontal.webp
-          fetch assets/symbol.png assets/symbol.png
-          fetch assets/symbol.webp assets/symbol.webp
-          fetch assets/og-image.png assets/og-image.png
-
-          cat > vercel.json <<'JSON'
-          {
-            "cleanUrls": true,
-            "trailingSlash": false
-          }
-          JSON
-
-      - name: Commit website source to branch
+      - name: Commit website source
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
@@ -76,5 +41,5 @@ jobs:
             echo "No changes to commit."
             exit 0
           fi
-          git commit -m "Add Tokani corporate website from Vercel preview"
-          git push origin HEAD:${{ github.head_ref || github.ref_name }}
+          git commit -m "Add Tokani corporate website source"
+          git push origin HEAD:website-sync

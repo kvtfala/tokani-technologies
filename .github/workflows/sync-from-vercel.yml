@@ -1,0 +1,80 @@
+name: Sync Tokani website from Vercel preview
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sync-from-vercel.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Fetch deployed website
+        shell: bash
+        env:
+          BASE_URL: https://tokani-technologies-qtbn5pclu-kvtfalas-projects.vercel.app
+          SHARE_URL: https://tokani-technologies-qtbn5pclu-kvtfalas-projects.vercel.app/?_vercel_share=AB7jeshKnpaAbfAZn4TL4ZPZUwmv6pL1
+        run: |
+          set -euo pipefail
+          COOKIE=/tmp/vercel-cookies.txt
+          CURL="curl -fsSL --retry 3 --retry-delay 2 -c $COOKIE -b $COOKIE"
+
+          # Open the temporary Vercel share link once to establish the deployment-access cookie.
+          $CURL "$SHARE_URL" -o index.html
+
+          fetch() {
+            local remote="$1"
+            local local_path="$2"
+            mkdir -p "$(dirname "$local_path")"
+            $CURL "$BASE_URL/$remote" -o "$local_path"
+          }
+
+          fetch story.html story.html
+          fetch solutions.html solutions.html
+          fetch how-we-work.html how-we-work.html
+          fetch contact.html contact.html
+          fetch styles.css styles.css
+          fetch script.js script.js
+          fetch robots.txt robots.txt
+          fetch site.webmanifest site.webmanifest
+          fetch favicon.ico favicon.ico
+          fetch favicon-16x16.png favicon-16x16.png
+          fetch favicon-32x32.png favicon-32x32.png
+          fetch favicon-48x48.png favicon-48x48.png
+          fetch apple-touch-icon.png apple-touch-icon.png
+          fetch android-chrome-192x192.png android-chrome-192x192.png
+          fetch android-chrome-512x512.png android-chrome-512x512.png
+          fetch mstile-150x150.png mstile-150x150.png
+          fetch assets/logo-horizontal.png assets/logo-horizontal.png
+          fetch assets/logo-horizontal.webp assets/logo-horizontal.webp
+          fetch assets/symbol.png assets/symbol.png
+          fetch assets/symbol.webp assets/symbol.webp
+          fetch assets/og-image.png assets/og-image.png
+
+          cat > vercel.json <<'JSON'
+          {
+            "cleanUrls": true,
+            "trailingSlash": false
+          }
+          JSON
+
+      - name: Commit website source
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Add Tokani corporate website from Vercel preview"
+          git push

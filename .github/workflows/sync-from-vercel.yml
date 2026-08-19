@@ -1,10 +1,9 @@
 name: Sync Tokani website from Vercel preview
 
 on:
-  push:
+  pull_request:
     branches: [main]
-    paths:
-      - '.github/workflows/sync-from-vercel.yml'
+    types: [opened, synchronize, reopened]
   workflow_dispatch:
 
 permissions:
@@ -14,8 +13,10 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
+      - name: Check out writable branch
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Fetch deployed website
         shell: bash
@@ -27,7 +28,6 @@ jobs:
           COOKIE=/tmp/vercel-cookies.txt
           CURL="curl -fsSL --retry 3 --retry-delay 2 -c $COOKIE -b $COOKIE"
 
-          # Open the temporary Vercel share link once to establish the deployment-access cookie.
           $CURL "$SHARE_URL" -o index.html
 
           fetch() {
@@ -66,7 +66,7 @@ jobs:
           }
           JSON
 
-      - name: Commit website source
+      - name: Commit website source to branch
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
@@ -77,4 +77,4 @@ jobs:
             exit 0
           fi
           git commit -m "Add Tokani corporate website from Vercel preview"
-          git push
+          git push origin HEAD:${{ github.head_ref || github.ref_name }}

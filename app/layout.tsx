@@ -1,0 +1,4 @@
+import type { Metadata } from "next";
+import "./globals.css";
+export const metadata: Metadata = { title: "Tokani Technologies | Your friend in technology", description: "Practical, human technology for Fiji businesses—from professional websites to CRM, workflows and custom platforms.", icons: { icon: "/brand/favicon.ico", apple: "/brand/apple-touch-icon.png" }, openGraph: { title: "Tokani Technologies", description: "Your friend in technology. Built in Fiji. Built for the way we do business.", images: ["/brand/Tokani_OpenGraph_1200x630.webp"] }, twitter: { card: "summary_large_image", title: "Tokani Technologies", description: "Your friend in technology.", images: ["/brand/Tokani_OpenGraph_1200x630.webp"] } };
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) { return <html lang="en"><body>{children}</body></html>; }

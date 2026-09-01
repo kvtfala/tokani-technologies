@@ -124,7 +124,7 @@ export default function UnravelVitiCaseStudy() {
             <span><strong>Focus</strong> Tourism + transport</span>
             <span><strong>Stage</strong> Launch completion</span>
           </div>
-          <a className="text-link" href="#evolution">See how the brief evolved <Arrow/></a>
+          <div className="uv-case-hero-actions"><a className="text-link" href="#evolution">See how the brief evolved <Arrow/></a><a className="text-link" href="https://unravel-viti.vercel.app" target="_blank" rel="noreferrer">View the current Unravel build <Arrow/></a></div>
         </div>
         <div className="uv-case-hero-visual">
           <figure className="uv-screen"><img src={siteScreenshot} alt="Current Unravel Viti website developed by Tokani Technologies" width={1360} height={904}/><figcaption>Current Unravel Viti digital platform</figcaption></figure>

@@ -30,6 +30,7 @@
 .uv-case-meta{display:flex;flex-wrap:wrap;gap:0;margin:34px 0;border-top:1px solid var(--line);border-left:1px solid var(--line)}
 .uv-case-meta span{padding:13px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);font-size:10px;color:#5e5954}
 .uv-case-meta strong{display:block;margin-bottom:4px;color:var(--black);font-size:8px;letter-spacing:.09em;text-transform:uppercase}
+.uv-case-hero-actions{display:flex;flex-wrap:wrap;gap:22px;align-items:center}
 .uv-case-hero-visual{position:relative;min-height:735px;overflow:hidden;background:#162126}
 .uv-screen{position:absolute;z-index:2;left:8%;top:10%;width:78%;margin:0;padding:8px 8px 0;background:#fff;box-shadow:0 24px 60px rgba(0,0,0,.35);transform:rotate(-1deg)}
 .uv-screen img{display:block;width:100%;height:auto}

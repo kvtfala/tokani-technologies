@@ -60,7 +60,7 @@ const roles = [
 ];
 
 const buildValue = [
-  ["Custom Next.js development", "A modern, fast and flexible foundation that can evolve as Unravel adds new experiences, services and operational tools."],
+  ["Custom Next.js development", "A modern React and TypeScript foundation that is fast, flexible and able to evolve as Unravel adds new experiences, services and operational tools."],
   ["GitHub version control", "Every change is tracked so the platform can be maintained, reviewed and developed safely over time."],
   ["Vercel cloud deployment", "Controlled releases and reliable delivery make updates easier to manage without rebuilding the business around the website."],
   ["Cloudinary image delivery", "Unravel's photographic library is resized, compressed and served appropriately for phones, tablets and desktop screens."],
@@ -185,13 +185,13 @@ export default function UnravelVitiCaseStudy() {
           <figure><img loading="lazy" src={sharedTable} alt="Food and hospitality during an Unravel Viti community experience" width={1600} height={1000}/><figcaption>Food + hospitality</figcaption></figure>
           <figure className="uv-photo-wide"><img loading="lazy" src={transport} alt="Unravel Viti transport vehicles and team" width={1600} height={1000}/><figcaption>Transport capability</figcaption></figure>
         </div>
-        <div className="uv-photo-copy"><p>The homepage&apos;s editorial “Unravel the Experience” sequence is designed to communicate welcome, learning, food, culture and human connection rather than functioning as a conventional gallery.</p><p>Cloudinary handles automatic sizing, format optimisation, compression and responsive cropping, while non-critical imagery is lazy-loaded.</p></div>
+        <div className="uv-photo-copy"><p>The homepage&apos;s editorial “Unravel the Experience” sequence is designed to communicate welcome, learning, food, culture and human connection rather than functioning as a conventional gallery. The Silana experience also carries its own story-led image sequence.</p><p>Cloudinary handles automatic sizing, format optimisation, compression and responsive cropping, while non-critical imagery is lazy-loaded.</p></div>
       </section>
 
       <section className="section uv-seo">
         <div className="section-heading"><div><p className="eyebrow blue">SEO & discoverability</p><h2>Make each service and experience understandable to search engines too.</h2></div><p>The SEO layer is built around real Fiji service and location intent, not keyword stuffing.</p></div>
         <div className="uv-seo-grid">
-          <article><h3>Page-level foundations</h3><p>Unique titles and descriptions, canonical URLs, sitemap generation, robots control and OpenGraph/social sharing metadata.</p></article>
+          <article><h3>Page-level foundations</h3><p>Unique titles and descriptions, canonical URLs, sitemap generation, robots control, OpenGraph/social sharing metadata and social preview image generation.</p></article>
           <article><h3>Structured data</h3><p>Organization, TravelAgency, Service, TouristTrip and Breadcrumb schema help describe Unravel&apos;s business, transport services and individual experiences.</p></article>
           <article><h3>Local themes</h3><p>Fiji cultural tours, Suva, Nausori, Nadi, Naitasiri, Tailevu, Viti Levu, airport transfers, private transport and village experiences.</p></article>
           <article><h3>Controlled launch</h3><p>The Vercel preview is deliberately noindex until a production custom domain is connected. That is launch control, not an SEO omission.</p></article>
@@ -201,6 +201,7 @@ export default function UnravelVitiCaseStudy() {
       <section className="uv-behind section">
         <div className="section-heading"><div><p className="eyebrow blue">Behind the build</p><h2>Technology translated into business value.</h2></div><p>The stack matters because of what it allows Unravel to do next—not because the customer needs a list of developer logos.</p></div>
         <div className="uv-tech-grid">{buildValue.map(([title, copy], i) => <article key={title}><span>{String(i + 1).padStart(2,"0")}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
+        <div className="uv-deploy-flow" aria-label="Deployment workflow"><span>Development</span><Arrow/><span>GitHub version control</span><Arrow/><span>Vercel deployment</span><Arrow/><span>Production website</span></div>
         <p className="uv-iteration-note"><strong>99 tracked GitHub commits/iterations</strong> sit between the initial repository work and the current inspected version. That does not mean 99 hours or 99 major features; it is evidence of substantial refinement, testing, content work, optimisation and iteration.</p>
       </section>
 

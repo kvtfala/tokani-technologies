@@ -102,6 +102,9 @@
 .uv-tech-grid article>span{color:var(--sky);font-size:9px;font-weight:800}
 .uv-tech-grid h3{margin:54px 0 13px;color:#fff;font-size:19px;letter-spacing:-.03em}
 .uv-tech-grid p{margin:0;color:#bcbcbc;font-size:11px;line-height:1.68}
+.uv-deploy-flow{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:34px;padding:20px;border:1px solid #3d3d3d;background:#171717;flex-wrap:wrap}
+.uv-deploy-flow>span:not([aria-hidden]){color:#e6e6e6;font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.uv-deploy-flow>span[aria-hidden]{color:var(--sky);font-size:17px}
 .uv-iteration-note{margin:40px 0 0;padding:22px;border-left:4px solid var(--brown);background:#181818;color:#bbb;font-size:11px;line-height:1.68}
 .uv-iteration-note strong{color:#fff}
 .uv-role{background:#eee7dd}
